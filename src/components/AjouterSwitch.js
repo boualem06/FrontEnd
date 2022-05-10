@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Usefetch from "./Usefetch";
-import {  Link } from "react-router-dom";
+import {  Link, Route } from "react-router-dom";
 import Cookies from 'js-cookie'
+import Navbar from "./Navbar";
+import SideBar from "./SideBar";
 export default function AjouterSwitch(props) {
+  const [loadsubmitDet, setLoadsubmitDet] = useState(false);
   const [Switch, setSwitch] = useState({
     "Bloc": "",
     "Armoire": "",
@@ -19,14 +22,25 @@ export default function AjouterSwitch(props) {
     "Etat": false
   });
   // const [nb,setNb]=useState(0) ;
-  const Ajouter = (props) => {  
+  const Ajouter = () => {  
+    console.log("start ajouter ")
+    setLoadsubmitDet(true);
     fetch('http://localhost:5000/api/postswitch', {
       method: 'POST',
       headers: {'Content-Type': 'application/json',
       'x-access-token': Cookies.get("jwt"), },
       body: JSON.stringify(Switch)
     }).then(res => res.json())
-    .then(data => console.log(data)) ;
+    .then(data => {
+      console.log(data);
+      // setTimeout(() => {
+      //   // 
+        
+      // }, 7000)
+      setLoadsubmitDet(false);
+      console.log("End ajouter")
+     }) ;
+    props.setPort(Switch);
   }
   // const Ajouter = () => {
   //   fetch('http://localhost:5000/api/switch'
@@ -56,20 +70,24 @@ export default function AjouterSwitch(props) {
     ;
   };
   return (
-    <div className=" ajouterSwitch text-black text-xl w-full bg-cover">
-      
-      <form className="sm:w-full lg:w-2/3 mx-auto  lg:my-5 my-2 rounded-2xl shadow-2xl shadow-slate-400  lg:p-10 px-5 py-3 ">
-      <div className="flex  justify-end space-x-8 lg:space-x-12 p-6">
-        <button className=" hover:scale-110 hover:bg-blue-500 hover:outline-none hover:ring-2 ring-purple-700 hover:shadow-lg hover:shadow-blue-500 px-3  py-2 bg-blue-600 rounded-xl sm:text-xl  text-2xl text-white"
-          onClick={Ajouter}
-          type="submit"
-        >
-          Sauvegarder
-        </button>
-        <button className="hover:scale-110 hover:bg-blue-500 hover:outline-none hover:ring-2 ring-purple-700 hover:shadow-lg hover:shadow-blue-500 px-3 py-2 bg-blue-600 rounded-xl sm:text-xl text-2xl text-white">
+    <div  style={{height:"100vh"}} className="flex   w-full   ">
+    <Navbar></Navbar>
+    <div className="scrollbar w-full overflow-y-auto    ">
+    <SideBar
+  image="./../images/image01.png"
+  nom="Refisse Youcef "
+  titre="Configurer les ports de Switch"
+></SideBar>
+    <div className="  text-black text-xl w-full bg-cover">
+    <div className="flex  justify-end space-x-8 lg:space-x-12 p-6">
+        <Link to ="/Login">
+        <button className=" hover:bg-blue-800 bg-blue-700 px-2 py-2 border rounded-lg text-white font-bold  ">
           Annuler
         </button>
+        </Link>
       </div>
+      <form className="sm:w-full lg:w-2/3 mx-auto block rounded-2xl   lg:p-10 px-5 py-3 ">
+      
         <div className="grid grid-cols-2 lg:gap-y-10 lg:gap-x-28 gap-10 bg-slate-300 lg:p-10 px-5 py-3 rounded-2xl ">
           <div>
             <label htmlFor="nomswitch"> Nom Switch </label>
@@ -226,12 +244,235 @@ export default function AjouterSwitch(props) {
             </label>
           </div>
         </div>
-        <Link to={"/ConfigurerPorts"}>  
-        <button className="hover:scale-110 transition duration-300 hover:-translate-y-1 bg-[#3319E8] hover:outline-none mx-auto block mt-5 px-3 py-2  rounded-xl sm:text-xl text-2xl text-white">
-          Suivant
+        
+        {loadsubmitDet?<Link to={"/ConfigurerPorts"}>  
+        <button className=" hover:bg-blue-800 bg-blue-700 px-2 py-2 border rounded-lg text-white font-bold block mx-auto mt-4 " 
+          type="submit">
+          {!loadsubmitDet?<h3>Suivant</h3>:
+          <div class="loadingio-spinner-spin-guwuy00vjh">
+                  <div class="ldio-kp6g3e7ejdo">
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                }
         </button>
-        </Link>
+         </Link>:<button className=" hover:bg-blue-800 bg-blue-700 px-2 py-2 border rounded-lg text-white font-bold block mx-auto mt-4 " onClick={Ajouter}
+          type="submit">
+          {!loadsubmitDet?<h3>Suivant</h3>:
+          <div class="loadingio-spinner-spin-guwuy00vjh">
+                  <div class="ldio-kp6g3e7ejdo">
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                    <div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                }
+        </button>
+}
+         
       </form>
+    </div>
+    </div>
     </div>
   );
 }

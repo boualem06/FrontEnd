@@ -38,6 +38,22 @@ function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [NbPorts,setNbPorts]=useState(0) ;
   const [nomSwitch,setNomSwitch]=useState("") ;
+  const [Ports,setPorts1]=useState([]) ;
+  const [Port,setPort] = useState({
+    "Bloc": "",
+    "Armoire": "",
+    "Nom": "",
+    "Marque": "",
+    "Modèle": "",
+    "Adresse_IP": "",
+    "N_d_inventaire": "",
+    "N_Serie": "",
+    "Adresse_MAC": "",
+    "Nombre_de_ports_F_E": 0,
+    "Nombre_de_ports_G_E": 0,
+    "Nombre_de_ports_SFP": 0,
+    "Etat": false
+  });
   useEffect(() => {
     const user = Cookies.get("jwt");
     console.log(user);
@@ -98,10 +114,10 @@ function App() {
             </div>
           </Route>
           <Route path="/" exact><PremierePage></PremierePage></Route>
-          <Route path="/AjouterSwitch" exact><AjouterSwitch setNomSwitch={setNomSwitch} NbPorts={NbPorts} setNbPorts={setNbPorts} ></AjouterSwitch></Route>
+          <Route path="/AjouterSwitch" exact><AjouterSwitch setNomSwitch={setNomSwitch} NbPorts={NbPorts} setNbPorts={setNbPorts} setPort={setPort}></AjouterSwitch></Route>
 
-          <Route path="/Confirmation"><Confirmation  NbPorts={NbPorts} ></Confirmation></Route>
-          <Route path="/ConfigurerPorts"><ConfigurerPorts nomSwitch={nomSwitch} NbPorts={NbPorts}></ConfigurerPorts></Route>
+          <Route path="/Confirmation"><Confirmation  NbPorts={NbPorts} Ports={Ports} Port={Port} ></Confirmation></Route>
+          <Route path="/ConfigurerPorts"><ConfigurerPorts nomSwitch={nomSwitch} NbPorts={NbPorts} setPorts1={setPorts1}></ConfigurerPorts></Route>
           <Route path="/Login" exact><Home ></Home></Route>
           <Route path="/CreateUser" exact><CreateUser></CreateUser></Route>
           <Route path="/ModiferUser" exact><ModiferUser></ModiferUser></Route>

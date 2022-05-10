@@ -1,42 +1,33 @@
 import { render } from '@testing-library/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import {  Link } from "react-router-dom";
+import Navbar from "./Navbar";
+import SideBar from "./SideBar";
 import Cookies from 'js-cookie'
 const DetailsPort = {
     "nm_port": 0,
-    "Nom":"",
+    "nom_switch":"",
     "ip_vlan": "",
     "type": "",
-    "cascade": false,
+    "cscade": "",
     "EtatDePort": "",
     "Cascades_vers_depuis": "",
-    "Entree": false,
     "Cable": "",
+    "Entree": "",  
     "prise": "",
 };
 
 const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
    
     // console.log()
+    
     const [Ports, setPorts] = useState([]);
     const [Port, setPort] = useState(DetailsPort);
-    console.log(Ports) ;
-    Port.Nom=props.nomSwitch ;
+    Port.nom_switch=props.nomSwitch ;
     const items = [];
-
-    const Sauvegarder = () => {
-        Ports.map(item => { console.log(item) })
-        Ports.map(item => {
-            fetch('http://localhost:5000/api/postport', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json',
-                'x-access-token': Cookies.get("jwt"),},
-                body: JSON.stringify(item)
-            }).then(res => res.json())
-                .then(data => console.log(""));
-        }
-        )
-    }
+    
+    
+    
     // const Sauvegarder = () => {
     //   fetch('http://localhost:5000/api/ports'
     //   ).then(res => res.json())
@@ -44,11 +35,33 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
     //  }
     const handleChange = (e, Index) => {
         const { name, value } = e.target;
+        {/*if(name==="cascade"){
+            if(value==="oui"){
+                //  value=true;
+                setPort(prevState => ({
+                    ...prevState,
+                    [name]: true,
+                    nm_port: Index + 1,
+                }))
+                console.log("i am in the if")
+            }
+            else{
+                //  value =false;
+                setPort(prevState => ({
+                    ...prevState,
+                    [name]: false,
+                    nm_port: Index + 1,
+                }))
+                console.log("non")
+            }
+        }else*/}
+        
         setPort(prevState => ({
             ...prevState,
             [name]: value,
             nm_port: Index + 1,
         }))
+    
     }
 
     const portExists = (inputs, nm) => {
@@ -63,14 +76,16 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
             if (inputs.length == 0) {
                 let b1 = Port.Entree === "true";
                 Port.Entree = b1;
-                b1 = Port.cascade === "true";
-                Port.cascade = b1;
+                
+                 b1 = Port.cscade === "oui";
+                 Port.cscade = b1;
                 inputs.push(Port)
                 setPorts(inputs)
+                console.log(Port.cscade);
             }
             else {
                 if (portExists(inputs, Port.nm_port)) {
-                    console.log("inputs")
+             
                     if (Ports[Port.nm_port - 1] != DetailsPort) {
                         let p = Ports[Port.nm_port - 1];
                         Object.keys(Port).forEach((key) => {
@@ -78,22 +93,29 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
                                 p[key] = Port[key];
                             }
                         })
-                        let b1 = p.Entree === "true";
-                        p.Entree = b1;
-                        b1 = p.cascade === "true";
-                        p.cascade = b1;
+                        let b1;
+                        if(Ports[Port.nm_port-1].Entree!=true && Ports[Port.nm_port-1].Entree!=false)
+                        { b1 = p.Entree === "true";
+                        p.Entree = b1;}
+                        if(Ports[Port.nm_port-1].cscade!=true && Ports[Port.nm_port-1].cscade!=false)
+                         {b1 = p.cscade === "oui";
+                         p.cscade = b1;}
                         inputs[Port.nm_port - 1] = p
                         setPorts(inputs)
+                        console.log(p.cscade);
                     }
                 }
                 else {
                     inputs.push(Port);
                     setPorts(inputs)
+                    
                 }
             }
             setPort(DetailsPort)
+            
         }
     }, [Port])
+    props.setPorts1(Ports);
     // setPort(DetailsPort)
 
     // useEffect((e, Index) => {
@@ -124,15 +146,22 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
                     </select>
                 </td>
                 <td className="  text-center  py-1  px-2">
-                    <select name="cascade" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} >
+                    <select name="cscade" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} >
                         <option ></option>
-                        <option value="true">Oui</option>
-                        <option value="false">Non</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
                     </select>
                 </td>
                 <td className="  text-center  py-1  px-2 "> <input name="Cascades_vers_depuis" type="text" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} /></td>
                 <td className="  text-center  py-1  px-2"> <input name="prise" type="text" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} /></td>
-                <td className="  text-center  py-1  px-2"> <input name="Cable" type="text" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} /></td>
+                <td className="  text-center  py-1  px-2">
+                    <select name="Cable" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} >
+                        <option ></option>
+                        <option value="F_E">F_E</option>
+                        <option value="G_E">G_E</option>
+                        <option value="SFP">SFP</option>
+                    </select>
+                </td>
                 <td className="  text-center  py-1  px-2">
                     <select name="EtatDePort" className="px-2 py-1 w-full border rounded-md text-center" onChange={(e) => handleChange(e, I)} >
                         <option ></option>
@@ -146,15 +175,22 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
     }
 
     return (
-        <div className="bg-cover w-full p-4 ">
-            <div className="flex justify-end">
-                <Link to={"/Confirmation"}>
-                <button className="bg-violet-500 hover:bg-violet-600 px-3 py-2  rounded-md sm:text-xl text-2xl text-white" >Sauvegarder
+        <div  style={{height:"100vh"}} className="flex   w-full   ">
+            <Navbar></Navbar>
+            <div className="scrollbar w-full overflow-y-auto    ">
+            <SideBar
+          image="./../images/image01.png"
+          nom="Refisse Youcef "
+          titre="Configurer les ports de Switch"
+        ></SideBar>
+            <div className="flex justify-end m-5">
+                 <Link to={"/Confirmation"}> 
+                <button className=" hover:bg-blue-800 bg-blue-700 px-2 py-2 border rounded-lg text-white font-bold  "   >Sauvegarder
                 </button>
-                </Link>
+                 </Link> 
             </div>
-            <div className="table w-full p-2 m-2 bg-white shadow-md  shadow-gray-500/75 border border-gary-400 rounded-xl  h-1/2">
-                {/* <div className="  scrollbar overflow-auto  shadow-md  shadow-gray-500/75   border border-gary-400 rounded-xl "> */}
+            <div className=" table   w-full p-2 mr-5 bg-white shadow-md  shadow-gray-500/75 border border-gary-400 rounded-xl ">
+                {/* <div className="  shadow-md  shadow-gray-500/75   border border-gary-400 rounded-xl "> */}
                 <table className="w-full border-gray-300  border-solid">
                     <thead className="bg-gray-300  border-2   ">
                         <tr>
@@ -173,6 +209,8 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
                         {items}
                     </tbody>
                 </table>
+                {/* </div> */}
+            </div>
             </div>
         </div>
     )

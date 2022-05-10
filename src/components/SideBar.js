@@ -7,9 +7,9 @@ export default function SideBar(props) {
   
   return (
     <div className="">
-      <div className="navBar flex justify-between p-2  border-b-2 text-black bg-slate-200 shadow-md bg-gradient-to-r from-white  via-slate-400  to-blue-500">
+      <div className="navBar flex justify-between p-2  border-b-2 text-black bg-slate-200 shadow-md bg-gradient-to-r from-blue-300    to-blue-500">
         <div className="text-3xl font-bold px-2">
-          <h1>{props.titre}</h1>
+          <h1 className="text-black">{props.titre}</h1>
         </div>
         <div className="flex place-items-center space-x-4">
           <img

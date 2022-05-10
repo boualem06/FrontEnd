@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 import {  Link } from "react-router-dom";
+import SideBar from "./SideBar";
 const Modifier = (props) => {
   // console.log(props.Switch) ;
   const [ports, setPorts] = useState(false); //when it's true thats mean that we show the table of ports to modifie else we show the table of (nom d'inventaire etc...)
@@ -29,10 +30,10 @@ const Modifier = (props) => {
     props.Switch.Nombre_de_ports_SFP
   );
 
-  const [type, setType] = useState("");
-  const [entree, setEntree] = useState("");
-  const [cascade, setCascade] = useState("");
-  const [etat_Port, setEtatPort] = useState("");
+  // const [type, setType] = useState("");
+  // const [entree, setEntree] = useState("");
+  // const [cascade, setCascade] = useState("");
+  // const [etat_Port, setEtatPort] = useState("");
 
   //   console.log(props.Switch.Etat) ;
 
@@ -243,10 +244,17 @@ const Modifier = (props) => {
     /********************the form where the user will write the name of switch etc.... */
     <div style={{ height: "100vh" }} className="flex w-full  ">
       <Navbar></Navbar>
-      <div className="scrollbar overflow-auto w-full">
+      <div  className="scrollbar overflow-auto   w-full">
+     
+                {/* <div  className=" mt-4  scrollbar  w-full"> */}
         {!ports && (
+          
           <div className="  text-black text-xl w-full bg-cover ">
-
+             <SideBar
+                  image="./../images/image01.png"
+                  nom="Refisse Youcef "
+                  titre="Modifer les caracterisqtue de Switch"
+                />
             {confirmerone ? (
                     <div className="w-full flex justify-center">
                       {" "}
@@ -691,7 +699,12 @@ const Modifier = (props) => {
 
         {ports && (
           <div className="scrollbar overflow-auto w-full ">
-            <div className="bg-cover w-full p-4 ">
+            <div  className="bg-cover w-full  ">
+            <SideBar
+                  image="./../images/image01.png"
+                  nom="Refisse Youcef "
+                  titre="Modifer les ports de switch"
+                />
               <div className="table w-full p-2 m-2 bg-white shadow-md  shadow-gray-500/75 border border-gary-400 rounded-xl  h-1/2">
                 <div className="  scrollbar overflow-auto  shadow-md  shadow-gray-500/75   border border-gary-400 rounded-xl ">
                   {confirmer ? (
@@ -1043,6 +1056,7 @@ const Modifier = (props) => {
             </div>
           </div>
         )}
+        {/* </div> */}
       </div>
     </div>
   );
