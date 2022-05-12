@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import Navbar from "./Navbar";
 import {  Link } from "react-router-dom";
 import SideBar from "./SideBar";
+import Image from '../images/forgotpasswordback.jpg'
 const Modifier = (props) => {
   // console.log(props.Switch) ;
   const [ports, setPorts] = useState(false); //when it's true thats mean that we show the table of ports to modifie else we show the table of (nom d'inventaire etc...)
@@ -29,48 +30,7 @@ const Modifier = (props) => {
   const [Nombre_de_ports_SFP, setNombre_de_ports_SFP] = useState(
     props.Switch.Nombre_de_ports_SFP
   );
-
-  // const [type, setType] = useState("");
-  // const [entree, setEntree] = useState("");
-  // const [cascade, setCascade] = useState("");
-  // const [etat_Port, setEtatPort] = useState("");
-
-  //   console.log(props.Switch.Etat) ;
-
-  //   const [Switch, setSwitch] = useState({
-  //     Adresse_IP: "",
-  //     Adresse_MAC: "",
-  //     Armoire: "",
-  //     Bloc: "",
-  //     Etat: "",
-  //     Marque: "",
-  //     Modèle: "",
-  //     N_Serie: "",
-  //     N_d_inventaire: "",
-  //     Nom: "",
-  //     Nombre_de_ports_F_E: "",
-  //     Nombre_de_ports_G_E: "",
-  //     Nombre_de_ports_SFP: "",
-
-  //   });
-
-  //   var switcher={
-
-  //     Adresse_IP: "",
-  //     Adresse_MAC: "",
-  //     Armoire: "",
-  //     Bloc: "",
-  //     Etat: "",
-  //     Marque: "",
-  //     Modèle: "",
-  //     N_Serie: "",
-  //     N_d_inventaire: "",
-  //     Nom: "",
-  //     Nombre_de_ports_F_E: "",
-  //     Nombre_de_ports_G_E: "",
-  //     Nombre_de_ports_SFP: "",
-
-  //   } ;
+  
 
   const [loadsubmitDet, setLoadsubmitDet] = useState(false);
   const [loadingSauvegarder, setLoadingSauvegarder] = useState(false);
@@ -110,8 +70,6 @@ const Modifier = (props) => {
       .then((res) => res.json())
       .then((data) => {
         console.log("submitdet");
-        // console.log(switcher);
-        // console.log(data);
         setTablePorts(data);
         setLoadsubmitDet(false);
          setPorts(true);
@@ -148,14 +106,14 @@ const Modifier = (props) => {
       .then((data) => {
         // console.log(switcher);
         console.log("submitdettwo");
-        
+        console.log(data) ;
         // setTablePorts(data);
         setTerminerSubmit(true)
         setTimeout(() => {
           // 
           setTerminerSubmit(false) ;
           setConfirmerOne(false);
-        }, 2000);
+        }, 4000);
 
         setLoadsubmitDetTwo(false);
         
@@ -242,7 +200,7 @@ const Modifier = (props) => {
 
   return (
     /********************the form where the user will write the name of switch etc.... */
-    <div style={{ height: "100vh" }} className="flex w-full  ">
+    <div style={{ height: "100vh",backgroundImage: `url(${Image})` }} className="flex w-full bg-cover  ">
       <Navbar></Navbar>
       <div  className="scrollbar overflow-auto   w-full">
      
@@ -269,7 +227,7 @@ const Modifier = (props) => {
                               submitDetTwo() ;
                               // setConfirmerOne(false);
                             }}
-                            className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                            className=" bg-green-600 hover:bg-green-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                           >
                             {!loadsubmitDetTwo ? (
                               <h3>confirmer</h3>
@@ -386,7 +344,7 @@ const Modifier = (props) => {
                             onClick={() => {
                               setConfirmerOne(false);
                             }}
-                            className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                            className=" bg-red-600 hover:bg-red-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                           >
                             annuler
                           </button>
@@ -424,7 +382,7 @@ const Modifier = (props) => {
               </button>
             </div> */}
 
-            <form className="sm:w-full lg:w-2/3 mx-auto  lg:my-5 my-2 rounded-2xl shadow-2xl shadow-slate-700  lg:p-10 px-5 py-3 bg-gradient-to-b from-blue-300    to-blue-400 ">
+            <form className="sm:w-full lg:w-2/3 mx-auto  lg:my-5 my-2 rounded-2xl shadow-xl shadow-slate-300  lg:p-10 px-5 py-3 bg-blue-200 ">
               <div className="grid grid-cols-2 lg:gap-y-10 lg:gap-x-28 gap-10">
                 <div>
                   <label> Bloc </label>
@@ -720,7 +678,7 @@ const Modifier = (props) => {
                               sauvegarder();
                               
                             }}
-                            className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                            className=" bg-green-600 hover:bg-green-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                           >
                             {!loadingSauvegarder ? (
                               <h3>confirmer</h3>
@@ -837,7 +795,7 @@ const Modifier = (props) => {
                             onClick={() => {
                               setConfirmer(false);
                             }}
-                            className=" bg-blue-600 hover:bg-blue-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
+                            className=" bg-red-600 hover:bg-red-700 px-3 py-2  rounded-md sm:text-xl font-bold text-white"
                           >
                             annuler
                           </button>
@@ -1057,7 +1015,7 @@ const Modifier = (props) => {
           </div>
         )}
         {/* </div> */}
-      </div>
+        </div>
     </div>
   );
 };

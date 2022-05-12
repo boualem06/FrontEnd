@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom"
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./Navbar";
+import Image from '../images/forgotpasswordback.jpg'
+
 
 import "./../index.css";
 import Add from "./Add";
@@ -64,22 +66,6 @@ const Home = (props) => {
     "http://localhost:5000/api/switch"
   );
   
-
-  // let headersList = {
-  //     "Accept": "*/*",
-  //     "User-Agent": "Thunder Client (https://www.thunderclient.com)"
-  //    }
-     
-  //    fetch("http://localhost:5000/api/switch", { 
-  //      method: "GET",
-  //      headers: headersList
-  //    }).then(function(response) {
-  //      return response.text();
-  //    }).then(function(data) {
-  //       console.log(data);
-  //    }) ;
-
-  //get the detail of special switch after we click on his detail button
   function getDetails(elem) {
     fetch("http://localhost:5000/api/getbyid", {
       method: "POST",
@@ -121,9 +107,6 @@ const Home = (props) => {
   }
 
   return (
-  //   <div>
-  //   helllo world
-  // </div>
     <div>
       {modifier && (
         <div>
@@ -141,7 +124,7 @@ const Home = (props) => {
               >
                 <SideBar
                   image="./../images/image01.png"
-                  nom="Refisse Youcef "
+                  nom= {props.user2.name}
                   titre="Acceuil"
                 />
                 {!searche && (
@@ -157,7 +140,7 @@ const Home = (props) => {
                     </button>
                   </div>
                 )}
-                {/* {(loadingDetailPorts && searche) && <div> loading... </div>} */}
+
                 {searche ? (
                   <RechercheSwitch  />
                 ) : (
@@ -179,6 +162,7 @@ const Home = (props) => {
           </div>
         </div>
       )}
+      
     </div>
 
   );

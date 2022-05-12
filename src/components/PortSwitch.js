@@ -4,6 +4,8 @@ import {  Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 import Cookies from 'js-cookie'
+import Image from '../images/forgotpasswordback.jpg'
+
 const DetailsPort = {
     "nm_port": 0,
     "nom_switch":"",
@@ -115,7 +117,9 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
             
         }
     }, [Port])
-    props.setPorts1(Ports);
+    useEffect(()=>{props.setPorts1(Ports);
+    },[Ports])
+    
     // setPort(DetailsPort)
 
     // useEffect((e, Index) => {
@@ -175,13 +179,13 @@ const ConfigurerPorts = (props) => { // Entrer le nombre de port dans Home
     }
 
     return (
-        <div  style={{height:"100vh"}} className="flex   w-full   ">
+        <div  style={{height:"100vh",backgroundImage: `url(${Image})`}} className="flex   w-full   ">
             <Navbar></Navbar>
             <div className="scrollbar w-full overflow-y-auto    ">
             <SideBar
           image="./../images/image01.png"
-          nom="Refisse Youcef "
-          titre="Configurer les ports de Switch"
+          nom={props.user2.name}
+          titre="CONFIGURER LES PORTS DE SWITCH"
         ></SideBar>
             <div className="flex justify-end m-5">
                  <Link to={"/Confirmation"}> 

@@ -9,18 +9,18 @@ import Table from "./components/table";
 import Detail from "./components/Detail";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-// import ModifierSwitch from './components/modifierswitch';
+
 import Modifier from "./components/modifier";
 import AjouterSwitch from "./components/AjouterSwitch";
 import { useEffect, useState } from "react";
 import Add from "./components/Add";
 import RechercheSwitch from "./components/RechercheSwitch";
-// import Test from './components/test'
+
 import Loading from "./components/loading";
 import Login from "./components/login";
 
 import ConfigurerPorts from "./components/PortSwitch";
-// import { Switch } from '@material-ui/core';
+
 import PremierePage from "./components/fist";
 import CreateUser from "./components/CreateUser";
 import ModiferUser from "./components/ModifierUser";
@@ -32,157 +32,163 @@ import Aide from "./components/Aide";
 import ForgotPassword from "./components/ForgotPassword";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Confirmation from "./components/Confirmation";
-//import Profile from './components/test1';
+
 import Cookies from "js-cookie";
 function App() {
   const [isAuth, setIsAuth] = useState(false);
-  const [NbPorts,setNbPorts]=useState(0) ;
-  const [nomSwitch,setNomSwitch]=useState("") ;
-  const [Ports,setPorts1]=useState([]) ;
-  const [Port,setPort] = useState({
-    "Bloc": "",
-    "Armoire": "",
-    "Nom": "",
-    "Marque": "",
-    "Modèle": "",
-    "Adresse_IP": "",
-    "N_d_inventaire": "",
-    "N_Serie": "",
-    "Adresse_MAC": "",
-    "Nombre_de_ports_F_E": 0,
-    "Nombre_de_ports_G_E": 0,
-    "Nombre_de_ports_SFP": 0,
-    "Etat": false
+  const [NbPorts, setNbPorts] = useState(0);
+  const [nomSwitch, setNomSwitch] = useState("");
+  const [Ports, setPorts1] = useState([]);
+  const [Port, setPort] = useState({
+    Bloc: "",
+    Armoire: "",
+    Nom: "",
+    Marque: "",
+    Modèle: "",
+    Adresse_IP: "",
+    N_d_inventaire: "",
+    N_Serie: "",
+    Adresse_MAC: "",
+    Nombre_de_ports_F_E: 0,
+    Nombre_de_ports_G_E: 0,
+    Nombre_de_ports_SFP: 0,
+    Etat: false,
   });
+  const [user2, setUser2] = useState({});
   useEffect(() => {
     const user = Cookies.get("jwt");
     console.log(user);
     if (user) {
       setIsAuth(true);
     }
+
+    let headersList = {
+      Accept: "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+      "x-access-token": Cookies.get("jwt"),
+      "Content-Type": "application/json",
+    };
+
+    fetch("http://localhost:5000/getCurrentUser", {
+      method: "GET",
+
+      headers: headersList,
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        setUser2(data);
+      });
   }, []);
   return (
-    //  <Home></Home>
-    // <Navbar></Navbar>
-    // <div>helllo world</div>
-
     <Router>
-      {/* <Route path={"/"} exact>
-              <div>hellllo</div>
-              <Link to={"/Home"}>Cliquer</Link>
-            </Route> */}
-      {/* <Route path={"/Login"}>
-            </Route> */}
-
       {!isAuth ? (
         <Switch>
           <Route path={"/"} exact>
             <div>hellllo</div>
             <Link to={"/Home"}>Cliquer</Link>
           </Route>
-          {/* {isAuth && <Route path="/Home"><Home></Home></Route>} */}
           <ProtectedRoutes
             isAuth={isAuth}
             exact
             component={Home}
             path="/Home"
           />
-          {/* <ProtectedLogin path="/Login" isAuth={isAuth}component={Login} ></ProtectedLogin> */}
-          {/* <ProtectedRoutes exact path={"/Profile"} isAuth={isAuth} component={ProfilePersonnel} ></ProtectedRoutes> */}
           <Route path={"/Login"}>
             {" "}
             <Login isAuth={isAuth} setIsAuth={setIsAuth} />
           </Route>
-          <Route path="/ForgotPassword"> <ForgotPassword></ForgotPassword></Route>
-          {/* <ProtectedRoutes path="/Ajouter" component={AjouterSwitch} isAuth={isAuth} />  */}
+          <Route path="/ForgotPassword">
+            {" "}
+            <ForgotPassword></ForgotPassword>
+          </Route>
         </Switch>
       ) : (
-
-
-
         <Switch>
-          <Route path={"/"} exact>
+          {/* <Route path={"/"} exact>
             <div>hellllo</div>
             <Link to={"/Login"}>Cliquer</Link>
-          </Route>
+          </Route> */}
           <Route path={"/Login"}>
-            <Home></Home>
+            <Home user2={user2}></Home>
           </Route>
           <Route path={"/Addd"}>
             <div>
               <Link to={"/Login"}>Go to Home</Link>
             </div>
           </Route>
-          <Route path="/" exact><PremierePage></PremierePage></Route>
-          <Route path="/AjouterSwitch" exact><AjouterSwitch setNomSwitch={setNomSwitch} NbPorts={NbPorts} setNbPorts={setNbPorts} setPort={setPort}></AjouterSwitch></Route>
+          <Route path="/" exact>
+            <PremierePage></PremierePage>
+          </Route>
 
-          <Route path="/Confirmation"><Confirmation  NbPorts={NbPorts} Ports={Ports} Port={Port} ></Confirmation></Route>
-          <Route path="/ConfigurerPorts"><ConfigurerPorts nomSwitch={nomSwitch} NbPorts={NbPorts} setPorts1={setPorts1}></ConfigurerPorts></Route>
-          <Route path="/Login" exact><Home ></Home></Route>
-          <Route path="/CreateUser" exact><CreateUser></CreateUser></Route>
-          <Route path="/ModiferUser" exact><ModiferUser></ModiferUser></Route>
-          <Route path="/UsersMangement" exact><UsersMangement></UsersMangement></Route>
-          <Route path="/ModiferPasseword" exact><ModiferPasseword></ModiferPasseword></Route>
-          <Route path="/Aide" exact><Aide ></Aide></Route>
-          <Route path="/ProfilePersonnel" exact><ProfilePersonnel ></ProfilePersonnel></Route>
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/AjouterSwitch" exact>
+              <AjouterSwitch
+                user2={user2}
+                setNomSwitch={setNomSwitch}
+                NbPorts={NbPorts}
+                setNbPorts={setNbPorts}
+                setPort={setPort}
+              ></AjouterSwitch>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/Confirmation">
+              <Confirmation
+                user2={user2}
+                NbPorts={NbPorts}
+                Ports={Ports}
+                Port={Port}
+              ></Confirmation>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/ConfigurerPorts">
+              <ConfigurerPorts
+                user2={user2}
+                nomSwitch={nomSwitch}
+                NbPorts={NbPorts}
+                setPorts1={setPorts1}
+              ></ConfigurerPorts>
+            </Route>
+          )}
+          <Route path="/Login" exact>
+            <Home user2={user2}></Home>
+          </Route>
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/CreateUser" exact>
+              <CreateUser user2={user2}></CreateUser>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/ModiferUser" exact>
+              <ModiferUser user2={user2}></ModiferUser>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/UsersMangement" exact>
+              <UsersMangement user2={user2}></UsersMangement>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/ModiferPasseword" exact>
+              <ModiferPasseword user2={user2}></ModiferPasseword>
+            </Route>
+          )}
+          {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/Aide" exact>
+              <Aide user2={user2}></Aide>
+            </Route>
+          )}
 
-
-          {/* <Route path="/" element={<PremierePage/>} />
-          <Route path="/Ajouter" element={<AjouterSwitch />} />
-          <Route path="/Login" element={<Home />} />
-          <Route path="/CreateUser" element={<CreateUser />} />
-          <Route path="/ModiferUser" element={<ModiferUser />} />
-          <Route path="/UsersMangement" element={<UsersMangement />} />
-          <Route path="/ModiferPasseword" element={<ModiferPasseword />} />
-          <Route path="/Aide" element={<Aide />} />
-          <Route
-            path="/ProfilePersonnel"
-            element={<ProfilePersonnel />}
-          ></Route> */}
-
+          {/* < ProtectedAfterAuth userRole={user2.role} component={CreateUser} path={"/Aide" } ></ProtectedAfterAuth> */}
+          <Route path="/ProfilePersonnel" exact>
+            <ProfilePersonnel user2={user2}></ProfilePersonnel>
+          </Route>
         </Switch>
       )}
-      {/* dans cette partie j'ai trafiquer un peu donc c l'utilisateur a fait le Login le chemin de la page d'aaceuil est "/Login" */}
     </Router>
-
-    // <Router>
-
-    //   <Route path={"/"} exact>
-    //   {/* <PremierePage/> */}
-    //     <button><Link to={"/Home"}>Cliquer</Link></button>
-    //   </Route>
-    //   <ProtectedRoutes isAuth={isAuth}  component={Home} path="/Home" />
-    //   <Route path={"/Login"}> <Login setIsAuth={setIsAuth} /> </Route>
-    // {/* <ProtectedRoutes path="/Ajouter" component={AjouterSwitch} isAuth={isAuth} /> */}
-
-    //  {/* <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} />
-    // <ProtectedRoutes path="/Home" component={Test} isAuth={isAuth} /> */}
-    // {/* </Router> */}
-    //   {/* <Link to={"/profile"} > go to profile</Link> */}
-    //  < Router>
-    //     <Routes>
-    //          <Route path='/' element={<PremierePage/>} />
-    //          <Route path='/Ajouter' element={<AjouterSwitch/>} />
-    //          <Route path='/Home' element={<Home/>} />
-    //          <Route path='/Login' element={<Login/>} />
-    //          <Route path='/CreateUser' element={<CreateUser/>} />
-    //          <Route path='/ModiferUser' element={<ModiferUser/>} />
-    //          <Route path='/UsersMangement' element={<UsersMangement/>} />
-    //          <Route path='/ModiferPasseword' element={<ModiferPasseword/>} />
-    //          <Route path='/MotDePasseOublier' element={<MotDePasseOublier/>} />
-    //          <Route path='/Aide' element={<Aide/>} />
-    //          <Route path='/ProfilePersonnel' element={<ProfilePersonnel/>}></Route>
-    //      </Routes>
-    //   </Router>
-
-    // <AjouterSwitch></AjouterSwitch>
-    //  <Add></Add>
   );
 }
 

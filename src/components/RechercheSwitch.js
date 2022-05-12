@@ -8,8 +8,8 @@ function RechercheSwitch() {
   const [icone, setIcone] = useState(<KeyboardArrowDown />);
   return (
     // <div className="  text-black m-3  rounded-2xl py-8 px-8 shadow-md shadow-slate-500 ">
-     <div className="  text-black m-3  rounded-2xl py-8 px-8 shadow-md shadow-slate-500 ">
-      <h1 className="text-2xl lg:text-4xl">Rechercher un switch / port </h1>
+     <div className="  text-black m-3  rounded-2xl py-8 px-8 shadow-sm shadow-slate-500 ">
+      <h1 className="text-2xl lg:text-4xl font-bold uppercase">Rechercher un switch / port </h1>
       <div className="flex justify-between mt-4">
         <input
           className="block w-full  border-slate-300 self-center  lg:text-xl p-3 lg:p-4  bg-slate-100 rounded-xl active:outline-none lg:w-1/3 text-sm sm:h-10  sm:w-1/2 "

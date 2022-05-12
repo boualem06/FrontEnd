@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
+import Image from '../images/forgotpasswordback.jpg'
+
 
 const Confirmation = (props) => {
   console.log(props.Ports);
@@ -28,10 +30,7 @@ const Confirmation = (props) => {
   for (let I = 0; I < props.NbPorts; I++) {
     items.push(
       <tr className="bg-white m-2 border border-2 border-b-solid">
-        <th
-          scope="row"
-          className=" text-center py-2 "
-        >
+        <th scope="row" className=" text-center py-2 ">
           {props.Ports[I].nm_port}
         </th>
         <td className=" text-center py-2 ">{props.Ports[I].ip_vlan}</td>
@@ -58,7 +57,9 @@ const Confirmation = (props) => {
             </span>
           )}
         </td>
-        <td className=" text-center py-2 ">{props.Ports[I].Cascades_vers_depuis}</td>
+        <td className=" text-center py-2 ">
+          {props.Ports[I].Cascades_vers_depuis}
+        </td>
         <td>
           {props.Ports[I].Entree ? (
             <button class="bg-green-300 hover:bg-green-500 text-black font-bold py-1 px-2 rounded-full">
@@ -84,12 +85,12 @@ const Confirmation = (props) => {
     setClick2(!click2);
   };
   return (
-    <div style={{height:"100vh"}} className="flex w-full ">
+    <div style={{ height: "100vh",backgroundImage: `url(${Image})`  }} className="flex w-full cover">
       <Navbar></Navbar>
       <div className="scrollbar w-full  overflow-auto  ">
         <SideBar
           image="./../images/image01.png"
-          nom="Refisse Youcef "
+          nom={props.user2.name}
           titre="Confirmer la configuration des ports"
         ></SideBar>
         {/* <div className="relative z-20">
@@ -103,15 +104,17 @@ const Confirmation = (props) => {
           </h1>
         </div> */}
         <div className="flex justify-end">
-        <button
+          <button
             className="mt-4 mr-4 hover:bg-blue-800 bg-blue-700 px-4 py-2 border rounded-lg text-white font-bold mb-4 "
             onClick={Sauvegarder}
           >
             Confirmer
           </button>
-          <button   className="mt-4 mr-4 hover:bg-blue-800 bg-blue-700 px-4 py-2 border rounded-lg text-white font-bold mb-4">
-            Annuler
-          </button>
+          <Link to="/Login">
+            <button className="mt-4 mr-4 hover:bg-blue-800 bg-blue-700 px-4 py-2 border rounded-lg text-white font-bold mb-4">
+              Annuler
+            </button>
+          </Link>
         </div>
         <div className="flex relative flex-col justify-between ">
           <div
@@ -147,62 +150,47 @@ const Confirmation = (props) => {
               <div className="shadow-md sm:rounded-lg mt-2 delay-150">
                 <table className="w-full border-gray-300 border-solid ">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-300  ">
-                    
-                      <th sclassName=" text-center py-3 px-2 ">
-                        nom
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        marque
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Bloc
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Armoire
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Modèle
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Adresse_IP
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Nombre de port F_E
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Nombre de Port G-E
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Nombre de Port SFP
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Etat
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Adresse Mac
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Numero d'inventaire
-                      </th>
-                      <th className=" text-center py-3 px-2 ">
-                        Numero de serie
-                      </th>
-                      <th className=" text-center py-3 px-2 "></th>
-                   
+                    <th className=" text-center py-3 px-2 ">nom</th>
+                    <th className=" text-center py-3 px-2 ">marque</th>
+                    <th className=" text-center py-3 px-2 ">Bloc</th>
+                    <th className=" text-center py-3 px-2 ">Armoire</th>
+                    <th className=" text-center py-3 px-2 ">Modèle</th>
+                    <th className=" text-center py-3 px-2 ">Adresse_IP</th>
+                    <th className=" text-center py-3 px-2 ">
+                      Nombre de port F_E
+                    </th>
+                    <th className=" text-center py-3 px-2 ">
+                      Nombre de Port G-E
+                    </th>
+                    <th className=" text-center py-3 px-2 ">
+                      Nombre de Port SFP
+                    </th>
+                    <th className=" text-center py-3 px-2 ">Etat</th>
+                    <th className=" text-center py-3 px-2 ">Adresse Mac</th>
+                    <th className=" text-center py-3 px-2 ">
+                      Numero d'inventaire
+                    </th>
+                    <th className=" text-center py-3 px-2 ">Numero de serie</th>
+                    <th className=" text-center py-3 px-2 "></th>
                   </thead>
                   <tbody>
                     <tr className="bg-white m-2 border border-2 border-b-solid">
-                      <td
-                        scope="row"
-                        className=" text-center py-2 "
-                      >
+                      <td scope="row" className=" text-center py-2 ">
                         {props.Port.Nom}
                       </td>
-                      <td className=" text-center py-2 ">{props.Port.Marque}</td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.Marque}
+                      </td>
                       <td className=" text-center py-2 ">{props.Port.Bloc}</td>
-                      <td className=" text-center py-2 ">{props.Port.Armoire}</td>
-                      <td className=" text-center py-2 ">{props.Port.Modèle}</td>
-                      <td className=" text-center py-2 ">{props.Port.Adresse_IP}</td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.Armoire}
+                      </td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.Modèle}
+                      </td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.Adresse_IP}
+                      </td>
                       <td className=" text-center py-2 ">
                         {props.Port.Nombre_de_ports_F_E}
                       </td>
@@ -218,9 +206,15 @@ const Confirmation = (props) => {
                           {props.Port.Etat}
                         </span>
                       </td>
-                      <td className=" text-center py-2 ">{props.Port.Adresse_MAC}</td>
-                      <td className=" text-center py-2 ">{props.Port.N_d_inventaire}</td>
-                      <td className=" text-center py-2 ">{props.Port.N_Serie}</td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.Adresse_MAC}
+                      </td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.N_d_inventaire}
+                      </td>
+                      <td className=" text-center py-2 ">
+                        {props.Port.N_Serie}
+                      </td>
                       <td className=" text-center py-2 "></td>
                     </tr>
                   </tbody>
@@ -260,35 +254,17 @@ const Confirmation = (props) => {
             <div className="shadow-md sm:rounded-lg mt-2 delay-150">
               <table className="w-full border-gray-300 border-solid">
                 <thead className="bg-gray-300  border-2   ">
-                  
-                    <th className=" text-center py-3 px-2 ">
-                      num de port
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      ip_vlan
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      type
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      cascade
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      Etat De Port
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      Cascades_vers_depuis
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      entree
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      cable
-                    </th>
-                    <th className=" text-center py-3 px-2 ">
-                      prise
-                    </th>
-                  
+                  <th className=" text-center py-3 px-2 ">num de port</th>
+                  <th className=" text-center py-3 px-2 ">ip_vlan</th>
+                  <th className=" text-center py-3 px-2 ">type</th>
+                  <th className=" text-center py-3 px-2 ">cascade</th>
+                  <th className=" text-center py-3 px-2 ">Etat De Port</th>
+                  <th className=" text-center py-3 px-2 ">
+                    Cascades_vers_depuis
+                  </th>
+                  <th className=" text-center py-3 px-2 ">entree</th>
+                  <th className=" text-center py-3 px-2 ">cable</th>
+                  <th className=" text-center py-3 px-2 ">prise</th>
                 </thead>
                 <tbody>{items}</tbody>
               </table>

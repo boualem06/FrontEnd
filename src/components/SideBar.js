@@ -6,7 +6,7 @@ export default function SideBar(props) {
   const [icone, setIcone] = useState(<ExpandMore />);
   
   return (
-    <div className="">
+    <div className="sticky top-0 z-50 ">
       <div className="navBar flex justify-between p-2  border-b-2 text-black bg-slate-200 shadow-md bg-gradient-to-r from-blue-300    to-blue-500">
         <div className="text-3xl font-bold px-2">
           <h1 className="text-black">{props.titre}</h1>
