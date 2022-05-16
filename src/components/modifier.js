@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import {  Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import Image from '../images/forgotpasswordback.jpg'
+import Select from 'react-select'
 const Modifier = (props) => {
   // console.log(props.Switch) ;
   const [ports, setPorts] = useState(false); //when it's true thats mean that we show the table of ports to modifie else we show the table of (nom d'inventaire etc...)
@@ -39,6 +40,21 @@ const Modifier = (props) => {
   const [loadsubmitDetTwo,setLoadsubmitDetTwo]=useState(false) ;
   const [terminerSubmit,setTerminerSubmit]=useState(false) ;
   const [terminerSauvegarde,setTerminerSauvegarde]=useState(false) ;
+  const [locales,setLocales]=useState([]) ;
+ 
+  
+  useEffect(()=>{
+      fetch("http://localhost:5000/local").then(function(response) {
+      return response.json();
+     }).then(function(data) {
+       console.log("les locales") ;
+      console.log(data);
+      console.log("==========") ;
+      setLocales(data) ;
+    })
+   
+  },[])
+
   //show the loading when we save the modification of n_inventaire etcc...
 
   function submitDet() {
@@ -197,6 +213,14 @@ const Modifier = (props) => {
         setTerminerSauvegarde(true) ;
       });
   }
+
+  
+
+  // const options = [
+  //   { value: 'chocolate', label: 'Chocolate' },
+  //   { value: 'strawberry', label: 'Strawberry' },
+  //   { value: 'vanilla', label: 'Vanilla' }
+  // ]
 
   return (
     /********************the form where the user will write the name of switch etc.... */
@@ -386,13 +410,12 @@ const Modifier = (props) => {
               <div className="grid grid-cols-2 lg:gap-y-10 lg:gap-x-28 gap-10">
                 <div>
                   <label> Bloc </label>
-                  <input
-                    value={Bloc}
-                    type="text"
-                    id="nomswitch"
-                    className="block  rounded-md w-full p-2"
-                    onChange={(e) => setBloc(e.target.value)}
-                  ></input>
+                  <input value={Bloc}     onChange={(e) => setBloc(e.target.value)} className="block  rounded-md w-full p-2" type="text" list="locals" />
+                  <datalist id="locals">
+                   {locales.map((elem)=>(
+                       <option key={elem.id} selected>{elem.local}</option>
+                     ))}
+                  </datalist>
                 </div>
                 <div>
                   <label> Armoire </label>
@@ -852,7 +875,7 @@ const Modifier = (props) => {
                                 change_IPvlan(e, index);
                               }}
                               type="text"
-                              className="px-2 py-1 w-full border rounded-full"
+                              className="px-2 py-1 w-full border rounded-md"
                             />
                           </td>
                           <td className="  text-center  py-1  px-2">
@@ -861,7 +884,7 @@ const Modifier = (props) => {
                                 change_Type(e, index);
                               }}
                               name="type"
-                              className="px-2 py-1 w-full border rounded-full"
+                              className="px-2 py-1 w-full border rounded-md"
                             >
                               {elem.type === "wifi" ? (
                                 <option selected>wifi</option>
@@ -891,7 +914,7 @@ const Modifier = (props) => {
                                 change_Entree(e, index);
                               }}
                               name="type"
-                              className="px-2 py-1 w-full border rounded-full text-center"
+                              className="px-2 py-1 w-full border rounded-md text-center"
                             >
                               {elem.Entree.toString() === "true" ? (
                                 <option selected>true</option>
@@ -911,7 +934,7 @@ const Modifier = (props) => {
                                 change_Cascade(e, index);
                               }}
                               name="type"
-                              className="px-2 py-1 w-full border rounded-full text-center"
+                              className="px-2 py-1 w-full border rounded-md text-center"
                             >
                               {elem.cscade.toString() === "true" ? (
                                 <option selected>true</option>
@@ -933,19 +956,25 @@ const Modifier = (props) => {
                                 change_CascadeDepuisvers(e, index);
                               }}
                               type="text"
-                              className="px-2 py-1 w-full border rounded-full"
+                              className="px-2 py-1 w-full border rounded-md"
                             />
                           </td>
                           <td className="  text-center  py-1  px-2">
                             {" "}
-                            <input
+                            <input  value={elem.prise}    onChange={(e) => {change_Prise(e, index); }} className="px-2 py-1 w-full border rounded-md" type="text" list="locals" />
+                            <datalist id="locals">
+                             {locales.map((elem)=>(
+                               <option key={elem.id} selected>{elem.local}</option>
+                              ))}
+                  </datalist>
+                            {/* <input
                               value={elem.prise}
                               onChange={(e) => {
                                 change_Prise(e, index);
                               }}
                               type="text"
                               className="px-2 py-1 w-full border rounded-full"
-                            />
+                            /> */}
                           </td>
                           <td className="  text-center  py-1  px-2">
                             <select
@@ -953,7 +982,7 @@ const Modifier = (props) => {
                                 change_Cable(e, index);
                               }}
                               name="type"
-                              className="px-2 py-1 w-full border rounded-full text-center"
+                              className="px-2 py-1 w-full border rounded-md text-center"
                             >
                               {elem.Cable === "SFP" ? (
                                 <option selected>SFP</option>
@@ -978,7 +1007,7 @@ const Modifier = (props) => {
                                 change_Etat(e, index);
                               }}
                               name="type"
-                              className="px-2 py-1 w-full border rounded-full text-center"
+                              className="px-2 py-1 w-full border rounded-md text-center"
                             >
                               {elem.EtatDePort === "Active" ? (
                                 <option selected value={"Active"}>
