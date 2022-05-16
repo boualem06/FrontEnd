@@ -1,5 +1,6 @@
 import Detail from "./Detail";
 import { withRouter } from "react-router-dom"
+; import Recherche from "./Recherche" ; 
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Navbar from "./Navbar";
@@ -10,7 +11,7 @@ import "./../index.css";
 import Add from "./Add";
 import SideBar from "./SideBar";
 
-import RechercheSwitch from "./RechercheSwitch";
+
 import Cookies from 'js-cookie'
 import AjouterSwitch from "./AjouterSwitch";
 
@@ -60,11 +61,52 @@ const Home = (props) => {
     Nombre_de_ports_SFP: "",
     ports: [],
   });
-
   //get all the switches that we have on the data base 
   const { switches, loading, setSwitches } = Usefetch(
     "http://localhost:5000/api/switch"
   );
+  const [lesSwitches , setLesSwitches] = useState([]) ; 
+  const [ports , setPorts ] = useState([]);
+   useEffect(()=>{
+    // fetch("http://localhost:5000/api/port")
+    // .then(function  (responce)  {
+    //   return responce.json();
+    // }).then(function(data){
+    //   setPorts(data) ; 
+    //   console.log("les ports "  ) ; 
+    //   console.log("les switches " , switches ) ; 
+    // })
+    let headersList = {
+      "Accept": "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+      "x-access-token": Cookies.get("jwt"),
+      "Content-Type": "application/json"
+     }
+     
+    
+     
+ fetch("http://localhost:5000/api/port", { 
+       method: "GET",
+       headers: headersList
+     }).then(function(response) {
+       return response.json();
+     }).then(function(data) {
+       console.log(data);
+       setPorts(data) ; 
+     }) ; 
+     fetch("http://localhost:5000/api/switch", { 
+       method: "GET",
+       headers: headersList
+     }).then(function(response) {
+       return response.json();
+     }).then(function(data) {
+       console.log(data);
+       setLesSwitches(data) ; 
+     }) ; 
+
+   } , []) ; 
+  
+
   
   function getDetails(elem) {
     fetch("http://localhost:5000/api/getbyid", {
@@ -142,7 +184,7 @@ const Home = (props) => {
                 )}
 
                 {searche ? (
-                  <RechercheSwitch  />
+                  <Recherche switches={switches} ports = {ports} setSwitches = {setSwitches } lesSwitches = {lesSwitches} />
                 ) : (
                   <Detail Detailswitch={Detailswitch} />
                 )}

@@ -14,7 +14,6 @@ import Modifier from "./components/modifier";
 import AjouterSwitch from "./components/AjouterSwitch";
 import { useEffect, useState } from "react";
 import Add from "./components/Add";
-import RechercheSwitch from "./components/RechercheSwitch";
 
 import Loading from "./components/loading";
 import Login from "./components/login";
@@ -25,7 +24,8 @@ import PremierePage from "./components/fist";
 import CreateUser from "./components/CreateUser";
 import ModiferUser from "./components/ModifierUser";
 import UsersMangement from "./components/UsersManagement";
-import ModiferPasseword from "./components/ModiferPasseword";
+import UserInformations from "./components/UserInformations";
+ import ModifierPasseword from "./components/ModifierPasseword";
 import MotDePasseOublier from "./components/MotDePasseOublier";
 import ProfilePersonnel from "./components/ProfilePersonnel";
 import Aide from "./components/Aide";
@@ -35,6 +35,11 @@ import Confirmation from "./components/Confirmation";
 
 import Cookies from "js-cookie";
 function App() {
+
+  const [users , setUsers] = useState([]) ; 
+  const [userAvisualiser , setUserAvisualiser] = useState({name:"" , 
+prenom:"" , phone:"" , role:2 , deleted : true , phone:"" , occupation:""}) ; 
+ 
   const [isAuth, setIsAuth] = useState(false);
   const [NbPorts, setNbPorts] = useState(0);
   const [nomSwitch, setNomSwitch] = useState("");
@@ -54,8 +59,9 @@ function App() {
     Nombre_de_ports_SFP: 0,
     Etat: false,
   });
+  
   const [user2, setUser2] = useState({});
-  useEffect(() => {
+    useEffect (() => {
     const user = Cookies.get("jwt");
     console.log(user);
     if (user) {
@@ -79,7 +85,24 @@ function App() {
       })
       .then(function (data) {
         setUser2(data);
+        console.log("data de currentUser" , data ) ; 
       });
+
+      fetch("http://localhost:5000/getusers", { 
+    method: "GET",
+    headers: {
+     Accept: "*/*",
+       "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+       "x-access-token": Cookies.get('jwt')
+    }
+  }).then(function(response) {
+    return response.json();
+  }).then(function(data) {
+    console.log("liste of users",data);
+    setUsers(data) ;
+    
+  })
+      
   }, []);
   return (
     <Router>
@@ -106,10 +129,10 @@ function App() {
         </Switch>
       ) : (
         <Switch>
-          {/* <Route path={"/"} exact>
+          <Route path={"/"} exact>
             <div>hellllo</div>
             <Link to={"/Login"}>Cliquer</Link>
-          </Route> */}
+          </Route>
           <Route path={"/Login"}>
             <Home user2={user2}></Home>
           </Route>
@@ -163,17 +186,19 @@ function App() {
           )}
           {(user2.role === 1 || user2.role === 0) && (
             <Route path="/ModiferUser" exact>
-              <ModiferUser user2={user2}></ModiferUser>
+              <ModiferUser values={userAvisualiser}  setValues = {setUserAvisualiser}></ModiferUser>
             </Route>
           )}
-          {(user2.role === 1 || user2.role === 0) && (
+          {((user2.role === 1 || user2.role === 0 )) && (
+           
             <Route path="/UsersMangement" exact>
-              <UsersMangement user2={user2}></UsersMangement>
+              <UsersMangement  users = {users} setUsers=  {setUsers } userAvisualiser = {userAvisualiser} setUserAvisualiser = {setUserAvisualiser}></UsersMangement>
             </Route>
+          
           )}
           {(user2.role === 1 || user2.role === 0) && (
-            <Route path="/ModiferPasseword" exact>
-              <ModiferPasseword user2={user2}></ModiferPasseword>
+            <Route path="/ModifierPasseword" exact>
+              <ModifierPasseword user2={user2}></ModifierPasseword>
             </Route>
           )}
           {(user2.role === 1 || user2.role === 0) && (
@@ -181,10 +206,13 @@ function App() {
               <Aide user2={user2}></Aide>
             </Route>
           )}
-
-          {/* < ProtectedAfterAuth userRole={user2.role} component={CreateUser} path={"/Aide" } ></ProtectedAfterAuth> */}
+           {(user2.role === 1 || user2.role === 0) && (
+            <Route path="/UserInformation" exact>
+              <UserInformations user = {userAvisualiser }></UserInformations>
+            </Route>
+          )}
           <Route path="/ProfilePersonnel" exact>
-            <ProfilePersonnel user2={user2}></ProfilePersonnel>
+            <ModifierPasseword user={user2}></ModifierPasseword>
           </Route>
         </Switch>
       )}

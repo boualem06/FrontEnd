@@ -144,7 +144,7 @@ const Login = (props) => {
       className="bg-cover relative flex md:justify-center  md:items-center"
       style={{ backgroundImage: `url(${Image})`, height: "100vh" }}
     >
-      <div className="  flex md:w-4/5 lg:w-3/12 lg:w-1/2 ">
+      <div className="  flex sm:w-full md:w-4/5  lg:w-1/2 ">
         <div
           className="  shadow-xl shadow-gray-500/75 w-1/2  bg-cover "
           style={{

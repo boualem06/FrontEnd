@@ -16,9 +16,11 @@ import {
 import Cookies from 'js-cookie'
 import { useEffect  } from "react";
 export default function Navbar(props) {
+  const [users,setUsers]=useState([]) ;
   const [user, setUser] = useState("hidden");
   const [user2,setUser2]=useState({}) ;
   const [icone, setIcone] = useState(<ExpandMore />);
+  
   useEffect(() => {
     let headersList = {
       "Accept": "*/*",
@@ -88,7 +90,8 @@ export default function Navbar(props) {
             </li>
             <li className="pl-8 hover:scale-105 hover:text-red-600">
               {" "}
-             <Link to={'/UsersMangement'}>Lister</Link>
+
+             <Link to={'/UsersMangement'}>-Lister</Link>
             </li>
           </ul>
         </div>
